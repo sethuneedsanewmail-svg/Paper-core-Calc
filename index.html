@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a43">
+  <title>Paper Core | Quotation & Margin Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">PC</div>
+    <div><div class="brand-name">PAPER CORE</div><div class="brand-subtitle">Quotation workspace</div></div>
+    <div class="topbar-spacer"></div>
+    <span class="status-pill"><span class="status-dot"></span> Local workspace</span>
+  </header>
+
+  <main class="page">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">SALES DESK</p>
+        <h1>Paper quotation</h1>
+        <p class="muted">Enter a selling price. VAT and internal margin indicators update automatically.</p>
+      </div>
+      <button id="resetBtn" class="button button-quiet" type="button">Reset form</button>
+    </section>
+
+    <div class="workspace">
+      <section class="panel quote-panel">
+        <div class="panel-heading">
+          <div><h2>Quotation details</h2><p>Information used to prepare the seller-facing voucher.</p></div>
+          <span class="step-number">01</span>
+        </div>
+        <div class="form-grid">
+          <label class="field field-wide"><span>Seller / customer name</span><input id="customer" type="text" placeholder="Enter customer name"></label>
+          <label class="field"><span>Voucher number</span><input id="voucherNo" type="text" placeholder="e.g. PC-0001"></label>
+          <label class="field"><span>Date</span><input id="voucherDate" type="date"></label>
+          <label class="field field-wide"><span>Paper / product description</span><input id="description" type="text" placeholder="e.g. Kraft paper roll"></label>
+          <label class="field"><span>Weight (kg)</span><input id="weight" type="number" min="0" step="0.001" value="1"></label>
+          <label class="field"><span>Other quantity / notes</span><input id="quantityNote" type="text" placeholder="Optional, seller-visible"></label>
+        </div>
+        <div class="section-rule"></div>
+        <div class="panel-heading compact">
+          <div><h2>Price & VAT</h2><p>Selling price is the primary input.</p></div>
+        </div>
+        <div class="form-grid">
+          <label class="field"><span>Selling price (before VAT)</span><div class="input-with-prefix"><span>₦</span><input id="sellingPrice" type="number" min="0" step="0.01" value="1000"></div></label>
+          <label class="field"><span>VAT rate (%)</span><div class="input-with-suffix"><input id="vatRate" type="number" min="0" max="100" step="0.01" value="7.5"><span>%</span></div></label>
+          <label class="field field-wide"><span>VAT amount</span><input id="vatAmount" type="text" readonly value="₦75.00"></label>
+        </div>
+        <div class="total-strip">
+          <div><span class="muted">Total selling price (including VAT)</span><strong id="totalWithVat">₦1,075.00</strong></div>
+          <span class="total-tag">VAT included</span>
+        </div>
+        <div class="actions">
+          <button id="previewBtn" class="button button-secondary" type="button">Preview seller voucher</button>
+          <button id="printBtn" class="button button-primary" type="button">Print / Save PDF</button>
+        </div>
+      </section>
+
+      <aside class="panel margin-panel">
+        <div class="panel-heading">
+          <div><h2>Internal margin</h2><p>Private figures — excluded from seller voucher.</p></div>
+          <span class="private-pill">INTERNAL ONLY</span>
+        </div>
+        <label class="field"><span>Total cost for this quotation (₦)</span><input id="totalCost" type="number" min="0" step="0.01" value="800"></label>
+        <div class="metric-card">
+          <span class="metric-label">Margin amount · VAT included</span>
+          <strong id="marginAmount" class="metric-value">₦275.00</strong>
+          <span class="metric-note">Total including VAT minus total cost</span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric-card small">
+            <span class="metric-label">Margin %</span>
+            <strong id="marginPercent" class="metric-value">25.58%</strong>
+            <span class="metric-note">Margin ÷ VAT-inclusive total</span>
+          </div>
+          <div class="metric-card small">
+            <span class="metric-label">Margin per kg</span>
+            <strong id="marginPerKg" class="metric-value">₦275.00</strong>
+            <span class="metric-note">Margin ÷ weight (kg)</span>
+          </div>
+        </div>
+        <div id="marginWarning" class="notice" role="status">Margin is positive.</div>
+        <p class="privacy-note"><span aria-hidden="true">🔒</span> Cost and margin indicators are internal workspace figures and are never printed on the seller voucher.</p>
+      </aside>
+    </div>
+
+    <section id="voucherPreview" class="panel voucher-panel" hidden>
+      <div class="panel-heading">
+        <div><h2>Seller voucher preview</h2><p>This is the seller-facing copy. Internal cost and margin are deliberately excluded.</p></div>
+        <span class="seller-pill">SELLER COPY</span>
+      </div>
+      <div id="voucherContent" class="voucher-content"></div>
+    </section>
+    <footer>Paper Core · Quotation workspace <span>Calculations run in your browser. No database connection is configured in this starter.</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
